@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap für Google & Co.
+  Wenn du eine neue Wohnung hinzufügst, hier einen weiteren <url>-Block
+  einfügen (Vorlage siehe unten). Dann mit "webseite-aktualisieren.bat"
+  hochladen.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/wohnung.html?id=rs5-dg</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- VORLAGE für weitere Wohnungen:
+  <url>
+    <loc>https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/wohnung.html?id=rs1-eg</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  -->
+
+</urlset>

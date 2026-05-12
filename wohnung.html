@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">Wohnungsdetails – Sennfeld</title>
 <meta name="description" id="pageDesc" content="Wohnungsdetails – Reichsdorfstraße, Sennfeld.">
+<meta name="author" content="Frank Sauer">
+<meta name="robots" content="index, follow">
+<meta name="geo.region" content="DE-BY">
+<meta name="geo.placename" content="Sennfeld">
+<link id="canonicalLink" rel="canonical" href="https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/">
+
+<!-- Open Graph (WhatsApp, Facebook, ...) -->
+<meta property="og:type"        id="ogType"        content="website">
+<meta property="og:title"       id="ogTitle"       content="Wohnung in Sennfeld – Reichsdorfstraße">
+<meta property="og:description" id="ogDesc"        content="Wohnungsangebot in Sennfeld, Neubaugebiet Rempertshag.">
+<meta property="og:url"         id="ogUrl"         content="https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/">
+<meta property="og:image"       id="ogImage"       content="https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/bilder/rs5-dg/bild-004-007.jpg">
+<meta property="og:locale"      content="de_DE">
+<meta property="og:site_name"   content="Wohnungen Reichsdorfstraße Sennfeld">
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       id="twTitle" content="Wohnung in Sennfeld">
+<meta name="twitter:description" id="twDesc"  content="Wohnungsangebot in Sennfeld.">
+<meta name="twitter:image"       id="twImage" content="https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/bilder/rs5-dg/bild-004-007.jpg">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -183,8 +203,78 @@
 
   // Page meta
   const titel = `${w.titel} – ${haus.adresse || ''}, ${haus.ort || ''}`;
+  const desc = w.untertitel || (w.beschreibung || '').slice(0, 160);
+  const pageUrl = location.origin + location.pathname + '?id=' + encodeURIComponent(w.id);
+  const heroImgAbs = heroImg ? (location.origin + location.pathname.replace(/wohnung\.html$/,'') + heroImg) : '';
+
   document.getElementById('pageTitle').textContent = titel;
-  document.getElementById('pageDesc').setAttribute('content', w.untertitel || titel);
+  document.getElementById('pageDesc').setAttribute('content', desc);
+  document.getElementById('canonicalLink').setAttribute('href', pageUrl);
+
+  // Open Graph + Twitter — auch pro Wohnung
+  const setMeta = (id, val) => { const el = document.getElementById(id); if (el && val) el.setAttribute('content', val); };
+  setMeta('ogType', 'product');
+  setMeta('ogTitle', titel);
+  setMeta('ogDesc', desc);
+  setMeta('ogUrl', pageUrl);
+  setMeta('ogImage', heroImgAbs);
+  setMeta('twTitle', titel);
+  setMeta('twDesc', desc);
+  setMeta('twImage', heroImgAbs);
+
+  // Schema.org JSON-LD (Apartment + Offer)
+  try {
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Apartment",
+      "name": w.titel,
+      "description": w.beschreibung || w.untertitel || '',
+      "url": pageUrl,
+      "numberOfRooms": w.zimmer,
+      "numberOfBedrooms": w.schlafzimmer,
+      "numberOfBathroomsTotal": w.badezimmer,
+      "yearBuilt": w.baujahr,
+      "floorLevel": w.etage,
+      "floorSize": w.wohnflaeche ? { "@type": "QuantitativeValue", "value": w.wohnflaeche, "unitCode": "MTK" } : undefined,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": haus.adresse,
+        "postalCode": haus.plz,
+        "addressLocality": haus.ort,
+        "addressRegion": "Bayern",
+        "addressCountry": "DE"
+      },
+      "geo": (w.lat && w.lon) ? { "@type": "GeoCoordinates", "latitude": w.lat, "longitude": w.lon } : undefined,
+      "image": (w.bilder || []).map(b => location.origin + location.pathname.replace(/wohnung\.html$/,'') + b.src),
+      "amenityFeature": (w.highlights || []).map(h => ({ "@type": "LocationFeatureSpecification", "name": h, "value": true })),
+      "petsAllowed": false,
+      "offers": w.kaltmiete ? {
+        "@type": "Offer",
+        "price": w.kaltmiete,
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": w.kaltmiete,
+          "priceCurrency": "EUR",
+          "unitCode": "MON",
+          "name": "Kaltmiete pro Monat"
+        },
+        "availability": w.status === 'verfügbar' ? "https://schema.org/InStock" :
+                        w.status === 'reserviert' ? "https://schema.org/LimitedAvailability" :
+                        "https://schema.org/OutOfStock",
+        "availabilityStarts": w.verfuegbarAb,
+        "seller": (window.KONTAKT) ? {
+          "@type": "Person",
+          "name": KONTAKT.name,
+          "telephone": KONTAKT.telefonE164
+        } : undefined
+      } : undefined
+    };
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(jsonLd, (k, v) => v === undefined ? undefined : v, 2);
+    document.head.appendChild(s);
+  } catch (e) { /* ignore */ }
 
   // Footer
   document.getElementById('footer').innerHTML =

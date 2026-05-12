@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/sitemap.xml
