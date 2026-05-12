@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wohnungen zu vermieten in Sennfeld – Reichsdorfstraße 1, 3 & 5</title>
+<meta name="description" content="Aktuelle Mietangebote in der Reichsdorfstraße 1, 3 und 5, 97526 Sennfeld – Neubaugebiet Rempertshag. Vermieter: Frank Sauer.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1f4e5f;
+    --accent: #c89b3c;
+    --bg: #fafaf7;
+    --text: #2b2b2b;
+    --muted: #6b6b6b;
+    --card: #ffffff;
+    --border: #e5e1d8;
+    --shadow: 0 6px 24px rgba(0,0,0,.08);
+    --green: #2e7d32;
+    --orange: #ed6c02;
+    --grey: #888;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text); background: var(--bg); line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--primary); }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .inner {
+    max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  }
+  nav .brand { font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+  nav ul { list-style: none; display: flex; gap: 22px; flex-wrap: wrap; }
+  nav a { color: var(--text); text-decoration: none; font-size: .95rem; transition: color .2s; }
+  nav a:hover { color: var(--accent); }
+  @media (max-width: 720px) { nav ul { display: none; } }
+
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #2d6a7f 100%);
+    color: #fff; padding: 80px 24px 70px; text-align: center;
+  }
+  .hero h1 { font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+  .hero p { font-size: clamp(1rem, 2vw, 1.2rem); opacity: .95; max-width: 780px; margin: 0 auto 18px; }
+  .hero .meta {
+    display: inline-flex; flex-wrap: wrap; gap: 22px; justify-content: center;
+    margin-top: 12px; font-size: .95rem; opacity: .9;
+  }
+  .hero .meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+  section { max-width: 1200px; margin: 0 auto; padding: 70px 24px; }
+  section h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--primary); margin-bottom: 8px; }
+  section .subtitle { color: var(--muted); margin-bottom: 36px; font-size: 1.05rem; }
+
+  /* Wohnungs-Karten */
+  .listings { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.12); }
+  .card-img {
+    position: relative; aspect-ratio: 4/3; overflow: hidden; background: #eee;
+  }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .card:hover .card-img img { transform: scale(1.04); }
+  .status-badge {
+    position: absolute; top: 14px; left: 14px;
+    padding: 6px 12px; border-radius: 999px; font-size: .78rem;
+    font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
+    color: #fff; background: var(--green);
+  }
+  .status-badge.reserviert { background: var(--orange); }
+  .status-badge.vermietet  { background: var(--grey); }
+  .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+  .card-body .address {
+    font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .8px;
+    margin-bottom: 6px;
+  }
+  .card-body h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 8px; line-height: 1.3; }
+  .card-body .sub { color: var(--muted); font-size: .92rem; margin-bottom: 14px; min-height: 2.6em; }
+  .card-facts {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+    padding: 12px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .card-facts div { text-align: center; }
+  .card-facts .label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .card-facts .value { font-size: 1rem; font-weight: 700; color: var(--primary); margin-top: 2px; }
+  .card-price {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;
+  }
+  .card-price .main { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+  .card-price small { color: var(--muted); font-size: .8rem; }
+  .card-cta {
+    display: inline-block; padding: 12px 22px; background: var(--accent); color: #fff;
+    text-decoration: none; font-weight: 600; border-radius: 6px; text-align: center;
+    transition: background .2s, transform .15s; margin-top: auto;
+  }
+  .card-cta:hover { background: #b48a2f; transform: translateY(-1px); }
+
+  .empty {
+    background: var(--card); border: 1px dashed var(--border); border-radius: 12px;
+    padding: 40px; text-align: center; color: var(--muted);
+  }
+
+  /* Häuser */
+  .houses { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .house {
+    background: var(--card); padding: 26px; border-radius: 10px; border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .house h3 { color: var(--primary); margin-bottom: 6px; font-size: 1.2rem; }
+  .house .ort { color: var(--muted); font-size: .9rem; margin-bottom: 14px; }
+  .house p { font-size: .95rem; margin-bottom: 14px; }
+  .house .count {
+    font-size: .85rem; padding: 6px 12px; background: var(--bg);
+    border-radius: 999px; display: inline-block; color: var(--primary); font-weight: 600;
+  }
+
+  /* Kontakt */
+  .kontakt { background: var(--primary); color: #fff; padding: 60px 24px; text-align: center; }
+  .kontakt .inner { max-width: 800px; margin: 0 auto; }
+  .kontakt h2 { color: #fff; }
+  .kontakt .subtitle { color: rgba(255,255,255,.8); }
+  .kontakt-info {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 30px;
+  }
+  .kontakt-info a { color: #fff; text-decoration: none; font-weight: 600; font-size: 1.2rem; }
+  .kontakt-info a:hover { color: var(--accent); }
+  .kontakt-info .label { font-size: .85rem; opacity: .8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .cta-btn {
+    display: inline-block; margin-top: 30px;
+    padding: 14px 30px; background: var(--accent); color: #fff;
+    text-decoration: none; font-weight: 600; border-radius: 6px;
+    transition: transform .15s, background .2s;
+  }
+  .cta-btn:hover { background: #b48a2f; transform: translateY(-2px); }
+
+  footer { text-align: center; padding: 28px 24px; background: #1a1a1a; color: #aaa; font-size: .85rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="brand">Reichsdorfstraße 1 · 3 · 5 · Sennfeld</div>
+    <ul>
+      <li><a href="#angebote">Angebote</a></li>
+      <li><a href="#haeuser">Häuser</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>Wohnen in Sennfeld – Reichsdorfstraße&nbsp;1, 3&nbsp;&amp;&nbsp;5</h1>
+  <p>Drei Mehrfamilienhäuser im ruhigen Neubaugebiet „Rempertshag" – mit moderner Ausstattung, dem Schweinfurter Mainbogen vor der Tür und der Innenstadt in wenigen Minuten erreichbar.</p>
+  <div class="meta">
+    <span>📍 97526 Sennfeld, Bayern</span>
+    <span>🏘️ 3 Häuser</span>
+    <span id="angebotsZahl">– Angebote</span>
+  </div>
+</header>
+
+<section id="angebote">
+  <h2>Aktuelle Angebote</h2>
+  <p class="subtitle">Klick auf eine Wohnung für alle Details und die Bildergalerie.</p>
+  <div class="listings" id="listings"></div>
+</section>
+
+<section id="haeuser">
+  <h2>Unsere Häuser</h2>
+  <p class="subtitle">Alle drei Häuser stehen im Neubaugebiet Rempertshag in Sennfeld.</p>
+  <div class="houses" id="houses"></div>
+</section>
+
+<section class="kontakt" id="kontakt">
+  <div class="inner">
+    <h2>Interesse? Sprechen Sie mich gerne an.</h2>
+    <p class="subtitle">Für eine Besichtigung oder weitere Fragen einfach anrufen.</p>
+    <div class="kontakt-info">
+      <div>
+        <div class="label">Ansprechpartner</div>
+        <div style="font-size:1.2rem; font-weight:600;" id="kontaktName">Frank Sauer</div>
+      </div>
+      <div>
+        <div class="label">Telefon</div>
+        <a id="kontaktTel" href="tel:+4997224548">09722 4548</a>
+      </div>
+    </div>
+    <a id="kontaktCta" href="tel:+4997224548" class="cta-btn">Jetzt anrufen</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 · Reichsdorfstraße 1, 3 & 5 · 97526 Sennfeld · Privates Mietangebot
+</footer>
+
+<script src="data/wohnungen.js"></script>
+<script>
+(function () {
+  const fmtEUR = n => new Intl.NumberFormat('de-DE').format(n) + ' €';
+
+  // Kontakt einsetzen
+  if (window.KONTAKT) {
+    document.getElementById('kontaktName').textContent = KONTAKT.name;
+    document.getElementById('kontaktTel').textContent = KONTAKT.telefon;
+    document.getElementById('kontaktTel').href = 'tel:' + KONTAKT.telefonE164;
+    document.getElementById('kontaktCta').href = 'tel:' + KONTAKT.telefonE164;
+  }
+
+  // Listings
+  const sichtbare = WOHNUNGEN.filter(w => w.status !== 'vermietet');
+  const aktive = sichtbare.filter(w => w.status === 'verfügbar').length;
+  const angebotsZahl = document.getElementById('angebotsZahl');
+  angebotsZahl.textContent = aktive === 1 ? '1 freie Wohnung' : aktive + ' freie Wohnungen';
+
+  const listingsEl = document.getElementById('listings');
+  if (sichtbare.length === 0) {
+    listingsEl.outerHTML = '<div class="empty">Aktuell sind keine Wohnungen frei. Schauen Sie gerne später wieder vorbei.</div>';
+  } else {
+    sichtbare.forEach(w => {
+      const haus = HAEUSER.find(h => h.id === w.hausId) || {};
+      const bild = (w.bilder && w.bilder[0]) ? w.bilder[0].src : '';
+      const statusKlasse = w.status === 'reserviert' ? 'reserviert' : w.status === 'vermietet' ? 'vermietet' : '';
+      const statusText = w.status === 'reserviert' ? 'Reserviert' : w.status === 'vermietet' ? 'Vermietet' : 'Verfügbar';
+
+      const card = document.createElement('a');
+      card.className = 'card';
+      card.href = 'wohnung.html?id=' + encodeURIComponent(w.id);
+      card.style.color = 'inherit';
+      card.style.textDecoration = 'none';
+      card.innerHTML = `
+        <div class="card-img">
+          ${bild ? `<img src="${bild}" alt="${w.titel}" loading="lazy">` : `<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#bbb;">kein Bild</div>`}
+          <span class="status-badge ${statusKlasse}">${statusText}</span>
+        </div>
+        <div class="card-body">
+          <div class="address">${haus.adresse || ''}${haus.ort ? ', ' + haus.ort : ''}</div>
+          <h3>${w.titel}</h3>
+          <div class="sub">${w.untertitel || ''}</div>
+          <div class="card-facts">
+            <div><div class="label">Zimmer</div><div class="value">${w.zimmer ?? '–'}</div></div>
+            <div><div class="label">Fläche</div><div class="value">${w.wohnflaeche ? w.wohnflaeche + ' m²' : '–'}</div></div>
+            <div><div class="label">Etage</div><div class="value">${w.etage ? w.etage.split(' ')[0] : '–'}</div></div>
+          </div>
+          <div class="card-price">
+            <span class="main">${w.kaltmiete ? fmtEUR(w.kaltmiete) : 'auf Anfrage'}</span>
+            <small>${w.nebenkosten || w.heizkosten ? '+ ' + fmtEUR((w.nebenkosten||0) + (w.heizkosten||0)) + ' NK' : ''}</small>
+          </div>
+          <span class="card-cta">Details ansehen →</span>
+        </div>
+      `;
+      listingsEl.appendChild(card);
+    });
+  }
+
+  // Häuser
+  const housesEl = document.getElementById('houses');
+  HAEUSER.forEach(h => {
+    const count = WOHNUNGEN.filter(w => w.hausId === h.id && w.status === 'verfügbar').length;
+    const countText = count === 0 ? 'Aktuell keine Angebote' : (count === 1 ? '1 Wohnung verfügbar' : count + ' Wohnungen verfügbar');
+    const el = document.createElement('div');
+    el.className = 'house';
+    el.innerHTML = `
+      <h3>${h.adresse}</h3>
+      <div class="ort">${h.plz} ${h.ort}</div>
+      <p>${h.beschreibung || ''}</p>
+      <span class="count">${countText}</span>
+    `;
+    housesEl.appendChild(el);
+  });
+})();
+</script>
+
+</body>
+</html>
