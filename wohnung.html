@@ -215,6 +215,7 @@
       <li><a href="#galerie">Galerie</a></li>
       <li><a href="#lage">Lage</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
+      <li><a id="navSelbstausk" href="selbstauskunft.html">Selbstauskunft</a></li>
     </ul>
   </div>
 </nav>
@@ -507,7 +508,10 @@
           <div><div class="label">Ansprechpartner</div><div style="font-size:1.2rem; font-weight:600;">${esc(k.name)}</div></div>
           ${k.telefon ? `<div><div class="label">Telefon</div><a href="tel:${esc(k.telefonE164)}">${esc(k.telefon)}</a></div>` : ''}
         </div>
-        ${k.telefonE164 ? `<div style="margin-top:40px;"><a href="tel:${esc(k.telefonE164)}" class="cta">Jetzt anrufen</a></div>` : ''}
+        <div style="margin-top:40px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+          ${k.telefonE164 ? `<a href="tel:${esc(k.telefonE164)}" class="cta">📞 Jetzt anrufen</a>` : ''}
+          <a href="selbstauskunft.html?wohnung=${esc(w.id)}" class="cta secondary">📝 Selbstauskunft online</a>
+        </div>
 
         <div class="divider">Oder Nachricht senden</div>
 
@@ -562,6 +566,10 @@
   `;
 
   main.innerHTML = html;
+
+  // Selbstauskunft-Link mit Wohnungs-ID vorbelegen
+  const navSel = document.getElementById('navSelbstausk');
+  if (navSel) navSel.href = 'selbstauskunft.html?wohnung=' + encodeURIComponent(w.id);
 
   // OpenStreetMap erst nach Klick laden (DSGVO-konform)
   (function setupMap() {
