@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mieter-Selbstauskunft – Wohnungen Sennfeld</title>
+<meta name="description" content="Online-Selbstauskunft für eine Mietwohnung in Sennfeld bei Schweinfurt – ca. 5 Minuten Zeitaufwand.">
+<meta name="robots" content="noindex, follow">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1f4e5f; --accent: #c89b3c; --bg: #fafaf7; --text: #2b2b2b;
+    --muted: #6b6b6b; --card: #ffffff; --border: #e5e1d8;
+    --shadow: 0 6px 24px rgba(0,0,0,.08); --hint: #fff7e6;
+  }
+  body { font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+         color: var(--text); background: var(--bg); line-height: 1.6; }
+
+  nav { background: rgba(255,255,255,.95); border-bottom: 1px solid var(--border); padding: 14px 24px; }
+  nav .inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  nav a { color: var(--primary); text-decoration: none; font-weight: 600; font-size: .95rem; }
+  nav a:hover { color: var(--accent); }
+
+  main { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  h1 { color: var(--primary); font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
+  .lead { color: var(--muted); margin-bottom: 12px; font-size: 1.05rem; }
+  .meta-bar {
+    display: flex; gap: 22px; flex-wrap: wrap; margin: 20px 0 26px;
+    padding: 14px 18px; background: var(--hint); border-left: 4px solid var(--accent);
+    border-radius: 6px; font-size: .92rem;
+  }
+  .meta-bar strong { color: var(--primary); }
+
+  .info-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 22px 26px; box-shadow: var(--shadow); margin-bottom: 28px;
+  }
+  .info-box h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.05rem; }
+  .info-box p { font-size: .95rem; color: var(--muted); }
+
+  fieldset {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 26px 28px; box-shadow: var(--shadow); margin-bottom: 22px;
+  }
+  legend {
+    padding: 6px 14px; background: var(--primary); color: #fff;
+    border-radius: 6px; font-weight: 600; font-size: .95rem;
+  }
+
+  .row { display: grid; gap: 16px; margin-top: 18px; }
+  .row.two { grid-template-columns: 1fr 1fr; }
+  .row.three { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 640px) { .row.two, .row.three { grid-template-columns: 1fr; } }
+
+  label { display: block; font-size: .88rem; font-weight: 600; margin-bottom: 6px; }
+  label .req { color: #c0392b; }
+  label .opt { color: var(--muted); font-weight: 400; font-size: .8rem; }
+  input[type=text], input[type=email], input[type=tel], input[type=date],
+  input[type=number], select, textarea {
+    width: 100%; padding: 11px 13px; border: 1px solid var(--border);
+    border-radius: 6px; font-size: 1rem; font-family: inherit;
+    background: var(--bg); color: var(--text); transition: border-color .2s, background .2s;
+  }
+  input:focus, select:focus, textarea:focus { outline: 0; border-color: var(--accent); background: #fff; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .check-row { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 10px 0; }
+  .check-row input[type=checkbox] { margin-top: 4px; width: 18px; height: 18px; flex-shrink: 0; cursor: pointer; }
+  .check-row label { font-weight: 400; font-size: .92rem; margin: 0; cursor: pointer; }
+  .check-row label strong { color: var(--primary); }
+
+  .hint-row { font-size: .82rem; color: var(--muted); margin-top: 6px; }
+
+  .pflicht-box {
+    background: #fdecea; border-left: 4px solid #c0392b;
+    padding: 16px 20px; border-radius: 6px; margin-top: 14px;
+  }
+  .pflicht-box .check-row label { font-weight: 500; }
+
+  .datenschutz-block {
+    background: var(--hint); border-radius: 6px;
+    padding: 18px 22px; font-size: .9rem; margin-top: 18px;
+  }
+  .datenschutz-block strong { color: var(--primary); }
+
+  .hp { position: absolute; left: -9999px; opacity: 0; }
+
+  button[type=submit] {
+    width: 100%; padding: 16px; background: var(--accent); color: #fff;
+    border: 0; border-radius: 8px; font-size: 1.1rem; font-weight: 700;
+    cursor: pointer; margin-top: 16px; transition: background .2s, transform .15s;
+  }
+  button[type=submit]:hover { background: #b48a2f; transform: translateY(-1px); }
+  button[type=submit]:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+  .form-result { margin-top: 18px; padding: 16px 20px; border-radius: 8px; display: none; }
+  .form-result.success { display: block; background: #e8f5e9; color: #1b5e20; border-left: 4px solid #2e7d32; }
+  .form-result.error   { display: block; background: #fdecea; color: #7f1d1d; border-left: 4px solid #c0392b; }
+
+  footer { text-align: center; padding: 28px 24px; background: #1a1a1a; color: #aaa; font-size: .85rem; }
+  footer a { color: var(--accent); text-decoration: none; margin: 0 6px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="index.html">← Zur Wohnungsübersicht</a>
+    <a href="datenschutz.html">Datenschutzhinweise</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Mieter-Selbstauskunft</h1>
+  <p class="lead">Damit ich Ihre Bewerbung schnell und fair prüfen kann.</p>
+
+  <div class="meta-bar">
+    <span>⏱️ <strong>Ca. 5 Minuten</strong> Zeitaufwand</span>
+    <span>🔒 <strong>Verschlüsselte Übertragung</strong></span>
+    <span>📨 Geht direkt an mich (Frank Sauer)</span>
+  </div>
+
+  <div class="info-box">
+    <h3>Wann sollten Sie diese Selbstauskunft ausfüllen?</h3>
+    <p>Idealerweise <strong>nach der Besichtigung</strong>, wenn Sie ernsthaftes Interesse haben.
+    Ihre Angaben helfen mir bei der Entscheidung. Sie können die Auskunft natürlich auch
+    schon vorab ausfüllen, wenn Sie das möchten — die Daten werden vertraulich behandelt.</p>
+  </div>
+
+  <form id="selbstauskunftForm" novalidate>
+
+    <input type="hidden" name="access_key" id="ak_field">
+    <input type="hidden" name="subject" value="Mieter-Selbstauskunft (Webformular)">
+    <input type="hidden" name="from_name" value="Wohnungen Sennfeld – Selbstauskunft">
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+    <!-- 1. Wohnung -->
+    <fieldset>
+      <legend>1. Welche Wohnung interessiert Sie?</legend>
+      <div class="row two">
+        <div>
+          <label for="f-wohnung">Gewünschte Wohnung <span class="req">*</span></label>
+          <select id="f-wohnung" name="wohnung" required>
+            <option value="">— bitte wählen —</option>
+            <option>Reichsdorfstraße 5, Dachgeschoss-Maisonette (4 Zi., 103 m²)</option>
+            <option>Reichsdorfstraße 1</option>
+            <option>Reichsdorfstraße 3</option>
+            <option>noch unentschieden / mehrere</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-einzug">Wunsch-Einzugsdatum <span class="opt">(optional)</span></label>
+          <input type="date" id="f-einzug" name="wunsch_einzug">
+        </div>
+      </div>
+      <div class="row two">
+        <div>
+          <label for="f-personen">Anzahl einziehender Personen (Erwachsene + Kinder) <span class="req">*</span></label>
+          <input type="number" id="f-personen" name="anzahl_personen" min="1" max="10" required>
+        </div>
+        <div>
+          <label for="f-davonkinder">davon Kinder <span class="opt">(optional)</span></label>
+          <input type="number" id="f-davonkinder" name="anzahl_kinder" min="0" max="10">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 2. Hauptmieter -->
+    <fieldset>
+      <legend>2. Hauptmieter / Hauptmieterin</legend>
+      <div class="row three">
+        <div>
+          <label for="f-anrede">Anrede</label>
+          <select id="f-anrede" name="anrede">
+            <option>Frau</option>
+            <option>Herr</option>
+            <option>keine Angabe</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-vorname">Vorname <span class="req">*</span></label>
+          <input type="text" id="f-vorname" name="vorname" required autocomplete="given-name">
+        </div>
+        <div>
+          <label for="f-nachname">Nachname <span class="req">*</span></label>
+          <input type="text" id="f-nachname" name="nachname" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="row two">
+        <div>
+          <label for="f-geburt">Geburtsdatum <span class="req">*</span></label>
+          <input type="date" id="f-geburt" name="geburtsdatum" required>
+          <div class="hint-row">Wird nur zum Nachweis der Volljährigkeit/Geschäftsfähigkeit benötigt.</div>
+        </div>
+        <div>
+          <label for="f-tel">Telefon <span class="req">*</span></label>
+          <input type="tel" id="f-tel" name="telefon" required autocomplete="tel">
+        </div>
+      </div>
+      <div class="row" style="margin-top:18px;">
+        <div>
+          <label for="f-email">E-Mail-Adresse <span class="req">*</span></label>
+          <input type="email" id="f-email" name="email" required autocomplete="email">
+        </div>
+      </div>
+      <div class="row" style="margin-top:18px;">
+        <div>
+          <label for="f-anschrift">Aktuelle Anschrift (Straße, Hausnummer, PLZ, Ort) <span class="req">*</span></label>
+          <input type="text" id="f-anschrift" name="aktuelle_anschrift" required autocomplete="street-address">
+        </div>
+      </div>
+      <div class="row two" style="margin-top:18px;">
+        <div>
+          <label for="f-wohnseit">Wohnhaft dort seit <span class="opt">(MM/JJJJ)</span></label>
+          <input type="text" id="f-wohnseit" name="wohnhaft_seit" placeholder="z. B. 05/2022">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 3. Beruf & Einkommen -->
+    <fieldset>
+      <legend>3. Beruf &amp; Einkommen</legend>
+      <div class="row two">
+        <div>
+          <label for="f-beruf">Derzeitiger Beruf <span class="req">*</span></label>
+          <input type="text" id="f-beruf" name="beruf" required>
+        </div>
+        <div>
+          <label for="f-arbeitgeber">Arbeitgeber / Auftraggeber <span class="opt">(optional)</span></label>
+          <input type="text" id="f-arbeitgeber" name="arbeitgeber">
+        </div>
+      </div>
+      <div class="row two">
+        <div>
+          <label for="f-beschverh">Beschäftigungsverhältnis <span class="req">*</span></label>
+          <select id="f-beschverh" name="beschaeftigungsverhaeltnis" required>
+            <option value="">— bitte wählen —</option>
+            <option>Angestellt – unbefristet</option>
+            <option>Angestellt – befristet</option>
+            <option>Selbständig / Freiberuflich</option>
+            <option>Beamter / Beamtin</option>
+            <option>In Ausbildung / Studium</option>
+            <option>Rentner / Pensionär</option>
+            <option>Elternzeit</option>
+            <option>Arbeitssuchend</option>
+            <option>Sonstiges</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-beschseit">Beschäftigt seit <span class="opt">(MM/JJJJ)</span></label>
+          <input type="text" id="f-beschseit" name="beschaeftigt_seit" placeholder="z. B. 09/2019">
+        </div>
+      </div>
+      <div class="row two" style="margin-top:18px;">
+        <div>
+          <label for="f-netto">Monatliches Netto­einkommen in EUR <span class="req">*</span></label>
+          <input type="number" id="f-netto" name="nettoeinkommen_eur" min="0" step="50" required>
+          <div class="hint-row">Summe aller Einkünfte (Lohn, Renten, Zulagen, Unterhalt usw.).</div>
+        </div>
+        <div>
+          <label for="f-haftpflicht">Private Haftpflicht­versicherung vorhanden?</label>
+          <select id="f-haftpflicht" name="haftpflicht">
+            <option value="">— bitte wählen —</option>
+            <option>Ja</option>
+            <option>Nein, wird zum Einzug abgeschlossen</option>
+            <option>Nein</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 4. Mitmieter -->
+    <fieldset>
+      <legend>4. Mitmieter / Mitmieterin <span style="font-weight:400; font-size:.85rem;">(falls vorhanden)</span></legend>
+      <div class="check-row">
+        <input type="checkbox" id="f-keinMit" name="kein_mitmieter" value="ja">
+        <label for="f-keinMit"><strong>Es zieht kein weiterer Mieter ein.</strong> (Felder unten dann bitte leer lassen)</label>
+      </div>
+      <div class="row three" style="margin-top:18px;">
+        <div>
+          <label for="f-mit-anrede">Anrede</label>
+          <select id="f-mit-anrede" name="mit_anrede">
+            <option value=""></option>
+            <option>Frau</option>
+            <option>Herr</option>
+            <option>keine Angabe</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-mit-vor">Vorname</label>
+          <input type="text" id="f-mit-vor" name="mit_vorname">
+        </div>
+        <div>
+          <label for="f-mit-nach">Nachname</label>
+          <input type="text" id="f-mit-nach" name="mit_nachname">
+        </div>
+      </div>
+      <div class="row two" style="margin-top:18px;">
+        <div>
+          <label for="f-mit-geb">Geburtsdatum</label>
+          <input type="date" id="f-mit-geb" name="mit_geburtsdatum">
+        </div>
+        <div>
+          <label for="f-mit-beruf">Beruf</label>
+          <input type="text" id="f-mit-beruf" name="mit_beruf">
+        </div>
+      </div>
+      <div class="row two" style="margin-top:18px;">
+        <div>
+          <label for="f-mit-beschverh">Beschäftigungsverhältnis</label>
+          <select id="f-mit-beschverh" name="mit_beschaeftigungsverhaeltnis">
+            <option value="">— bitte wählen —</option>
+            <option>Angestellt – unbefristet</option>
+            <option>Angestellt – befristet</option>
+            <option>Selbständig / Freiberuflich</option>
+            <option>Beamter / Beamtin</option>
+            <option>In Ausbildung / Studium</option>
+            <option>Rentner / Pensionär</option>
+            <option>Elternzeit</option>
+            <option>Arbeitssuchend</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-mit-netto">Nettoeinkommen mtl. (EUR)</label>
+          <input type="number" id="f-mit-netto" name="mit_nettoeinkommen_eur" min="0" step="50">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 5. Haushalt -->
+    <fieldset>
+      <legend>5. Haushalt &amp; Wohngewohnheiten</legend>
+      <div class="row" style="margin-top:0;">
+        <div>
+          <label for="f-kinderdetails">Falls Kinder im Haushalt: Alter der Kinder <span class="opt">(optional)</span></label>
+          <input type="text" id="f-kinderdetails" name="kinder_alter" placeholder="z. B. 4 und 7 Jahre">
+        </div>
+      </div>
+      <div class="row two" style="margin-top:18px;">
+        <div>
+          <label for="f-haustiere">Haustiere oder geplante Haustiere?</label>
+          <select id="f-haustiere" name="haustiere">
+            <option value="">— bitte wählen —</option>
+            <option>Keine</option>
+            <option>Kleintiere (z. B. Hamster, Vögel, Fische)</option>
+            <option>Katze</option>
+            <option>Hund</option>
+            <option>Sonstige</option>
+          </select>
+          <div class="hint-row">Hinweis: Für die Wohnung in RS 5 DG ist Tierhaltung lt. Hausordnung nicht gestattet.</div>
+        </div>
+        <div>
+          <label for="f-laerm">Tätigkeiten mit erhöhter Lärm­entwicklung im Haushalt? <span class="opt">(z. B. Musikinstrumente)</span></label>
+          <input type="text" id="f-laerm" name="laerm_taetigkeiten" placeholder="Falls ja: bitte kurz beschreiben">
+        </div>
+      </div>
+      <div class="row" style="margin-top:18px;">
+        <div>
+          <label for="f-sonstigePers">Weitere Personen im Haushalt <span class="opt">(z. B. Pflegekräfte)</span></label>
+          <input type="text" id="f-sonstigePers" name="weitere_haushaltsmitglieder">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 6. Vor-Vermieter -->
+    <fieldset>
+      <legend>6. Vor-Vermieter <span style="font-weight:400; font-size:.85rem;">(freiwillig)</span></legend>
+      <p style="font-size:.92rem; color:var(--muted); margin-bottom:14px;">
+        Diese Angaben helfen mir bei der Auswahl, sind aber freiwillig.
+      </p>
+      <div class="row two">
+        <div>
+          <label for="f-vv-name">Name</label>
+          <input type="text" id="f-vv-name" name="vor_vermieter_name">
+        </div>
+        <div>
+          <label for="f-vv-tel">Telefon</label>
+          <input type="tel" id="f-vv-tel" name="vor_vermieter_telefon">
+        </div>
+      </div>
+      <div class="row" style="margin-top:18px;">
+        <div>
+          <label for="f-vv-adr">Anschrift</label>
+          <input type="text" id="f-vv-adr" name="vor_vermieter_adresse">
+        </div>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="f-vv-okay" name="vor_vermieter_einwilligung" value="ja">
+        <label for="f-vv-okay">Ich erlaube Frank Sauer, beim Vor-Vermieter eine Auskunft zu Mietverhalten und Mietschuldenfreiheit einzuholen.</label>
+      </div>
+    </fieldset>
+
+    <!-- 7. Vermögensverhältnisse -->
+    <fieldset>
+      <legend>7. Vermögens­verhältnisse &amp; Bonität</legend>
+      <div class="row" style="margin-top:0;">
+        <div>
+          <label for="f-raten">Bestehende Ratenzahlungs- oder Unterhalts­verpflichtungen <span class="opt">(Gesamtsumme mtl. in EUR, optional)</span></label>
+          <input type="number" id="f-raten" name="raten_unterhalt_eur" min="0" step="10">
+        </div>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="f-insolv" name="keine_insolvenz" value="ja" required>
+        <label for="f-insolv"><strong>Pflichtangabe:</strong> Ich versichere, dass in den letzten 5 Jahren <strong>kein Insolvenz- oder Vergleichsverfahren</strong> über mein Vermögen eröffnet oder mangels Masse abgewiesen wurde, dass keine eidesstattliche Versicherung abgegeben wurde und derzeit keine entsprechenden Verfahren anhängig sind.</label>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="f-schufa" name="schufa_einwilligung" value="ja">
+        <label for="f-schufa">Ich willige ein, dass kurz vor dem Mietvertragsabschluss eine <strong>SCHUFA-/Creditreform-Auskunft</strong> über mich eingeholt werden darf.</label>
+      </div>
+    </fieldset>
+
+    <!-- 8. Anmerkungen -->
+    <fieldset>
+      <legend>8. Anmerkungen <span style="font-weight:400; font-size:.85rem;">(freiwillig)</span></legend>
+      <div class="row" style="margin-top:0;">
+        <div>
+          <label for="f-bemerkung">Worüber ich gern noch berichten möchte, z. B. warum genau diese Wohnung passt, Wunschtermin Besichtigung, Besonderheiten</label>
+          <textarea id="f-bemerkung" name="bemerkungen" rows="5"></textarea>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- 9. Datenschutz + Pflichterklärungen -->
+    <fieldset>
+      <legend>9. Wahrheits­erklärung &amp; Datenschutz</legend>
+
+      <div class="datenschutz-block">
+        <p><strong>Datenschutz-Hinweis (Art. 13 DSGVO):</strong>
+        Verantwortlich für die Verarbeitung Ihrer Daten ist Frank Sauer, An der Hackmähde 52, 97440 Werneck.
+        Die Daten werden ausschließlich zur Prüfung Ihrer Wohnungsbewerbung und – im Erfolgsfall – zur Anbahnung des Mietvertrags verwendet.
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
+        Kommt kein Mietvertrag zustande, werden Ihre Daten <strong>spätestens nach 3 Monaten gelöscht</strong>, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+        Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie auf Beschwerde bei der zuständigen Aufsichtsbehörde.
+        Weitere Informationen in der <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
+      </div>
+
+      <div class="pflicht-box">
+        <div class="check-row">
+          <input type="checkbox" id="f-wahrheit" name="wahrheit_bestaetigt" value="ja" required>
+          <label for="f-wahrheit"><strong>Pflichtangabe:</strong> Ich versichere, dass meine Angaben vollständig und wahrheits­gemäß sind. Mir ist bekannt, dass falsche Angaben den Vermieter zur fristlosen Kündigung wegen arglistiger Täuschung berechtigen können.</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="f-dsgvo" name="dsgvo_einwilligung" value="ja" required>
+          <label for="f-dsgvo"><strong>Pflichtangabe:</strong> Ich habe die <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutz­erklärung</a> sowie den obigen Datenschutz-Hinweis zur Kenntnis genommen und willige in die beschriebene Datenverarbeitung ein.</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <button type="submit" id="f-submit">Selbstauskunft jetzt absenden</button>
+
+    <div id="formResult" class="form-result" role="status" aria-live="polite"></div>
+  </form>
+</main>
+
+<footer>
+  © <span id="footerYear"></span> Frank Sauer · An der Hackmähde 52, 97440 Werneck ·
+  <a href="index.html">Startseite</a> ·
+  <a href="impressum.html">Impressum</a> ·
+  <a href="datenschutz.html">Datenschutz</a>
+</footer>
+
+<script src="data/wohnungen.js"></script>
+<script>
+(function () {
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  // Web3Forms-Key aus zentraler Datenquelle eintragen
+  const akField = document.getElementById('ak_field');
+  if (typeof KONTAKT !== 'undefined' && KONTAKT.web3formsKey) akField.value = KONTAKT.web3formsKey;
+
+  // Vorbelegen der Wohnung, wenn ?wohnung=... in URL
+  const params = new URLSearchParams(location.search);
+  const wid = params.get('wohnung');
+  if (wid && typeof WOHNUNGEN !== 'undefined') {
+    const w = WOHNUNGEN.find(x => x.id === wid);
+    if (w) {
+      const haus = HAEUSER.find(h => h.id === w.hausId) || {};
+      const label = w.titel + ' – ' + (haus.adresse || '') + ', ' + (haus.ort || '');
+      const sel = document.getElementById('f-wohnung');
+      // Option ergänzen + auswählen
+      const opt = document.createElement('option');
+      opt.value = label; opt.textContent = label; opt.selected = true;
+      sel.insertBefore(opt, sel.children[1]);
+    }
+  }
+
+  // Submit
+  const form = document.getElementById('selbstauskunftForm');
+  const result = document.getElementById('formResult');
+  const btn = document.getElementById('f-submit');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    result.className = 'form-result';
+    result.textContent = '';
+    if (!akField.value) {
+      result.className = 'form-result error';
+      result.textContent = 'Konfigurationsfehler: kein Access Key hinterlegt.';
+      return;
+    }
+    // HTML5-Validierung selbst auslösen
+    if (!form.reportValidity()) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet…';
+    try {
+      const data = Object.fromEntries(new FormData(form));
+      const r = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const j = await r.json();
+      if (j.success) {
+        form.reset();
+        result.className = 'form-result success';
+        result.innerHTML =
+          '<strong>✓ Vielen Dank!</strong> Ihre Selbstauskunft ist erfolgreich übermittelt. ' +
+          'Ich melde mich zeitnah persönlich bei Ihnen. — Frank Sauer<br><br>' +
+          '<a href="index.html" style="color:#1b5e20; font-weight:600;">← Zur Übersicht</a>';
+        btn.textContent = 'Selbstauskunft gesendet ✓';
+        window.scrollTo({ top: result.offsetTop - 80, behavior: 'smooth' });
+      } else {
+        result.className = 'form-result error';
+        result.textContent = 'Leider ist ein Fehler aufgetreten: ' + (j.message || 'Unbekannter Fehler') + '. Bitte rufen Sie direkt unter ' + (KONTAKT && KONTAKT.telefon || '09722 4548') + ' an.';
+        btn.disabled = false;
+        btn.textContent = 'Erneut versuchen';
+      }
+    } catch (err) {
+      result.className = 'form-result error';
+      result.textContent = 'Verbindungsfehler. Bitte rufen Sie direkt unter ' + (typeof KONTAKT !== 'undefined' && KONTAKT.telefon || '09722 4548') + ' an.';
+      btn.disabled = false;
+      btn.textContent = 'Erneut versuchen';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

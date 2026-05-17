@@ -20,6 +20,12 @@
   </url>
 
   <url>
+    <loc>https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/selbstauskunft.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
     <loc>https://sauerfrank7474-prog.github.io/wohnungen-sennfeld/impressum.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
