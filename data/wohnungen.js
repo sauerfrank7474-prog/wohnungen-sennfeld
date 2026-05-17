@@ -78,10 +78,13 @@ const WOHNUNGEN = [
 
     // Technik
     heizung: "Zentralheizung",
-    energietraeger: "Gas",
-    energieausweisTyp: "Bedarfsausweis",
-    energieausweisDatum: "bis 30. April 2014",
-    endenergiebedarf: "58,00 kWh/(m²·a)",
+    energietraeger: "Gas (mit Solar-Unterstützung)",
+    energieausweisTyp: "Verbrauchsausweis",
+    energieausweisDatum: "ausgestellt 08.07.2018, gültig bis 08.07.2028",
+    energieausweisRegNr: "BY-2018-002016386",
+    endenergiebedarf: "44,9 kWh/(m²·a)",
+    energieeffizienzklasse: "A",
+    baujahrWaermeerzeuger: 2011,
 
     // Lage-Koordinaten (für Karte)
     lat: 50.0325,

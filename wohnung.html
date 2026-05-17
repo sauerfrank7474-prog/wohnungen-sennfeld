@@ -432,15 +432,20 @@
 
   // ENERGIE
   if (w.energieausweisTyp || w.endenergiebedarf) {
+    const istVerbrauch = (w.energieausweisTyp || '').toLowerCase().includes('verbrauch');
+    const bedarfLabel = istVerbrauch ? 'Endenergieverbrauch' : 'Endenergiebedarf';
     html += `
       <section id="energie">
         <h2>Energieausweis</h2>
-        <p class="subtitle">Angaben gemäß Energieausweis</p>
+        <p class="subtitle">Pflichtangaben gemäß § 87 GEG</p>
         <div class="energy">
-          ${w.energieausweisTyp   ? `<div><div class="label">Ausweistyp</div><div class="value">${esc(w.energieausweisTyp)}</div></div>` : ''}
-          ${w.energieausweisDatum ? `<div><div class="label">Erstellungsdatum</div><div class="value">${esc(w.energieausweisDatum)}</div></div>` : ''}
-          ${w.endenergiebedarf    ? `<div><div class="label">Endenergiebedarf</div><div class="value">${esc(w.endenergiebedarf)}</div></div>` : ''}
-          ${w.energietraeger      ? `<div><div class="label">Energieträger</div><div class="value">${esc(w.energietraeger)}</div></div>` : ''}
+          ${w.energieausweisTyp       ? `<div><div class="label">Ausweistyp</div><div class="value">${esc(w.energieausweisTyp)}</div></div>` : ''}
+          ${w.energieausweisDatum     ? `<div><div class="label">Gültigkeit</div><div class="value">${esc(w.energieausweisDatum)}</div></div>` : ''}
+          ${w.endenergiebedarf        ? `<div><div class="label">${bedarfLabel}</div><div class="value">${esc(w.endenergiebedarf)}</div></div>` : ''}
+          ${w.energieeffizienzklasse  ? `<div><div class="label">Energieeffizienzklasse</div><div class="value" style="color:#2e7d32;">${esc(w.energieeffizienzklasse)}</div></div>` : ''}
+          ${w.energietraeger          ? `<div><div class="label">Energieträger</div><div class="value">${esc(w.energietraeger)}</div></div>` : ''}
+          ${w.baujahrWaermeerzeuger   ? `<div><div class="label">Baujahr Wärmeerzeuger</div><div class="value">${esc(w.baujahrWaermeerzeuger)}</div></div>` : ''}
+          ${w.energieausweisRegNr     ? `<div><div class="label">Registriernummer</div><div class="value" style="font-size:.95rem;">${esc(w.energieausweisRegNr)}</div></div>` : ''}
         </div>
       </section>
     `;
