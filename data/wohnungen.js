@@ -25,21 +25,21 @@ const HAEUSER = [
     adresse: "Reichsdorfstraße 1",
     plz: "97526",
     ort: "Sennfeld",
-    beschreibung: "Mehrfamilienhaus im Neubaugebiet Rempertshag, Sennfeld."
+    beschreibung: "Mehrfamilienhaus im Neubaugebiet Rempertshag, 97526 Sennfeld bei Schweinfurt – Innenstadt in 5 Minuten erreichbar."
   },
   {
     id: "rs3",
     adresse: "Reichsdorfstraße 3",
     plz: "97526",
     ort: "Sennfeld",
-    beschreibung: "Mehrfamilienhaus im Neubaugebiet Rempertshag, Sennfeld."
+    beschreibung: "Mehrfamilienhaus im Neubaugebiet Rempertshag, 97526 Sennfeld bei Schweinfurt – Innenstadt in 5 Minuten erreichbar."
   },
   {
     id: "rs5",
     adresse: "Reichsdorfstraße 5",
     plz: "97526",
     ort: "Sennfeld",
-    beschreibung: "6-Familienhaus, Baujahr 2011, massiv nach aktueller EnEV mit Gas-Brennwert und Solar-Unterstützung."
+    beschreibung: "6-Familienhaus in 97526 Sennfeld bei Schweinfurt, Baujahr 2011 – massiv nach aktueller EnEV mit Gas-Brennwert und Solar-Unterstützung."
   }
 ];
 

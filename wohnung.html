@@ -201,8 +201,9 @@
   const heroImg = (w.bilder && w.bilder[0]) ? w.bilder[0].src : '';
   const nkSum = (w.nebenkosten || 0) + (w.heizkosten || 0);
 
-  // Page meta
-  const titel = `${w.titel} – ${haus.adresse || ''}, ${haus.ort || ''}`;
+  // Page meta — Schweinfurt prominent für Suchmaschinen
+  const ortLang = haus.ort === 'Sennfeld' ? 'Sennfeld bei Schweinfurt' : (haus.ort || '');
+  const titel = `${w.titel} – ${haus.adresse || ''}, ${ortLang}`;
   const desc = w.untertitel || (w.beschreibung || '').slice(0, 160);
   const pageUrl = location.origin + location.pathname + '?id=' + encodeURIComponent(w.id);
   const heroImgAbs = heroImg ? (location.origin + location.pathname.replace(/wohnung\.html$/,'') + heroImg) : '';
