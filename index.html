@@ -236,7 +236,7 @@
   const fmtEUR = n => new Intl.NumberFormat('de-DE').format(n) + ' €';
 
   // Kontakt einsetzen
-  if (window.KONTAKT) {
+  if (typeof KONTAKT !== 'undefined') {
     document.getElementById('kontaktName').textContent = KONTAKT.name;
     document.getElementById('kontaktTel').textContent = KONTAKT.telefon;
     document.getElementById('kontaktTel').href = 'tel:' + KONTAKT.telefonE164;

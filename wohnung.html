@@ -263,7 +263,7 @@
                         w.status === 'reserviert' ? "https://schema.org/LimitedAvailability" :
                         "https://schema.org/OutOfStock",
         "availabilityStarts": w.verfuegbarAb,
-        "seller": (window.KONTAKT) ? {
+        "seller": (typeof KONTAKT !== 'undefined') ? {
           "@type": "Person",
           "name": KONTAKT.name,
           "telephone": KONTAKT.telefonE164
@@ -278,9 +278,7 @@
 
   // Footer
   document.getElementById('footer').innerHTML =
-    `© 2026 · ${esc(haus.adresse || '')}, ${esc(haus.plz || '')} ${esc(haus.ort || '')} · Privates Mietangebot` +
-    (w.objektNr ? ` · Objekt-Nr. ${esc(w.objektNr)}` : '') +
-    (w.quelleUrl ? ` · <a href="${esc(w.quelleUrl)}" target="_blank" rel="noopener">Original-Exposé</a>` : '');
+    `© 2026 · ${esc(haus.adresse || '')}, ${esc(haus.plz || '')} ${esc(haus.ort || '')} · Privates Mietangebot`;
 
   // HERO
   const statusBadge = w.status === 'reserviert' ? 'Reserviert' :
@@ -426,7 +424,7 @@
   }
 
   // KONTAKT
-  const k = window.KONTAKT || { name: 'Vermieter', telefon: '', telefonE164: '' };
+  const k = (typeof KONTAKT !== 'undefined') ? KONTAKT : { name: 'Vermieter', telefon: '', telefonE164: '' };
   html += `
     <section class="kontakt" id="kontakt">
       <div class="inner">
@@ -435,7 +433,6 @@
         <div class="kontakt-info">
           <div><div class="label">Ansprechpartner</div><div style="font-size:1.2rem; font-weight:600;">${esc(k.name)}</div></div>
           ${k.telefon ? `<div><div class="label">Telefon</div><a href="tel:${esc(k.telefonE164)}">${esc(k.telefon)}</a></div>` : ''}
-          ${w.objektNr ? `<div><div class="label">Objekt-Nr.</div><div style="font-size:1.2rem; font-weight:600;">${esc(w.objektNr)}</div></div>` : ''}
         </div>
         ${k.telefonE164 ? `<div style="margin-top:40px;"><a href="tel:${esc(k.telefonE164)}" class="cta">Jetzt anrufen</a></div>` : ''}
       </div>
