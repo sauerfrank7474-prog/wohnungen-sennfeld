@@ -119,6 +119,22 @@
   .infra-tags span { padding: 6px 14px; background: var(--card); border: 1px solid var(--border);
                      border-radius: 999px; font-size: .85rem; color: var(--primary); }
   .map-embed { width: 100%; aspect-ratio: 4/3; border: 0; border-radius: 10px; box-shadow: var(--shadow); }
+  .map-placeholder {
+    width: 100%; aspect-ratio: 4/3; border-radius: 10px; box-shadow: var(--shadow);
+    background: #eef3f1 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 14c-12 0-22 10-22 22 0 17 22 50 22 50s22-33 22-50c0-12-10-22-22-22zm0 30a8 8 0 110-16 8 8 0 010 16z' fill='%231f4e5f' opacity='.18'/></svg>") center/30% no-repeat;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background-color .2s;
+    border: 1px solid var(--border); padding: 30px; text-align: center;
+  }
+  .map-placeholder:hover { background-color: #e1ebe8; }
+  .map-placeholder .map-info { background: rgba(255,255,255,.85); padding: 18px 22px; border-radius: 8px; max-width: 360px; }
+  .map-placeholder .map-info strong { color: var(--primary); display: block; margin-bottom: 8px; font-size: 1.05rem; }
+  .map-placeholder .map-info p { font-size: .85rem; color: var(--muted); margin: 8px 0 14px; line-height: 1.5; }
+  .map-placeholder .map-info button {
+    padding: 10px 22px; background: var(--accent); color: #fff; border: 0;
+    border-radius: 6px; font-weight: 600; cursor: pointer; transition: background .2s;
+  }
+  .map-placeholder .map-info button:hover { background: #b48a2f; }
 
   .energy { background: var(--card); padding: 26px; border-radius: 10px; border: 1px solid var(--border);
             display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;
@@ -180,7 +196,9 @@
   .form-result.error   { display: block; background: #fdecea; color: #7f1d1d; border-left: 4px solid #c0392b; }
 
   footer { text-align: center; padding: 28px 24px; background: #1a1a1a; color: #aaa; font-size: .85rem; }
-  footer a { color: var(--accent); text-decoration: none; }
+  footer a { color: var(--accent); text-decoration: none; margin: 0 6px; }
+  footer a:hover { text-decoration: underline; }
+  footer .legal { margin-top: 8px; }
 
   .not-found { max-width: 700px; margin: 100px auto; text-align: center; padding: 40px 24px; }
   .not-found h1 { color: var(--primary); margin-bottom: 16px; }
@@ -320,7 +338,8 @@
 
   // Footer
   document.getElementById('footer').innerHTML =
-    `© 2026 · ${esc(haus.adresse || '')}, ${esc(haus.plz || '')} ${esc(haus.ort || '')} · Privates Mietangebot`;
+    `© ${new Date().getFullYear()} Frank Sauer · ${esc(haus.adresse || '')}, ${esc(haus.plz || '')} ${esc(haus.ort || '')}` +
+    `<div class="legal"><a href="index.html">Startseite</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>`;
 
   // HERO
   const statusBadge = w.status === 'reserviert' ? 'Reserviert' :
@@ -448,14 +467,20 @@
           </div>
           <div>
             ${bbox ? `
-              <iframe class="map-embed"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${w.lat}%2C${w.lon}"
-                loading="lazy"
-                title="Karte: ${esc(haus.adresse || '')}, ${esc(haus.ort || '')}"></iframe>
+              <div class="map-placeholder" id="mapPlaceholder"
+                   data-bbox="${bbox}" data-lat="${w.lat}" data-lon="${w.lon}"
+                   data-title="${esc('Karte: ' + (haus.adresse || '') + ', ' + (haus.ort || ''))}"
+                   role="button" tabindex="0">
+                <div class="map-info">
+                  <strong>📍 Karte anzeigen</strong>
+                  <p>Beim Klick wird die Karte von OpenStreetMap geladen. Dabei wird Ihre IP-Adresse an OpenStreetMap übermittelt. Weitere Informationen finden Sie in der <a href="datenschutz.html#osm">Datenschutzerklärung</a>.</p>
+                  <button type="button">Karte laden</button>
+                </div>
+              </div>
               <p style="margin-top:12px; font-size:.9rem; color:var(--muted);">
                 📍 ${esc(haus.adresse || '')}, ${esc(haus.plz || '')} ${esc(haus.ort || '')}<br>
                 <a href="https://www.openstreetmap.org/?mlat=${w.lat}&mlon=${w.lon}#map=16/${w.lat}/${w.lon}" target="_blank" rel="noopener" style="color:var(--accent);">
-                  Größere Karte öffnen
+                  In neuem Tab öffnen
                 </a>
               </p>
             ` : `<p>📍 ${esc(haus.adresse || '')}, ${esc(haus.plz || '')} ${esc(haus.ort || '')}</p>`}
@@ -527,6 +552,22 @@
   `;
 
   main.innerHTML = html;
+
+  // OpenStreetMap erst nach Klick laden (DSGVO-konform)
+  (function setupMap() {
+    const ph = document.getElementById('mapPlaceholder');
+    if (!ph) return;
+    const load = () => {
+      const bbox = ph.dataset.bbox, lat = ph.dataset.lat, lon = ph.dataset.lon, title = ph.dataset.title;
+      const iframe = document.createElement('iframe');
+      iframe.className = 'map-embed';
+      iframe.setAttribute('title', title);
+      iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lon}`;
+      ph.replaceWith(iframe);
+    };
+    ph.addEventListener('click', load);
+    ph.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); load(); } });
+  })();
 
   // Kontaktformular → Web3Forms
   (function setupForm() {
