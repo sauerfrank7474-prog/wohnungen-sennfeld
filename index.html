@@ -171,8 +171,8 @@
   .faq-list details p { padding: 0 0 18px; color: var(--text); line-height: 1.65; }
 
   /* Kontakt */
-  .kontakt { background: var(--primary); color: #fff; padding: 60px 24px; text-align: center; }
-  .kontakt .inner { max-width: 800px; margin: 0 auto; }
+  .kontakt { background: var(--primary); color: #fff; padding: 60px 24px; }
+  .kontakt .inner { max-width: 800px; margin: 0 auto; text-align: center; }
   .kontakt h2 { color: #fff; }
   .kontakt .subtitle { color: rgba(255,255,255,.8); }
   .kontakt-info {
@@ -188,6 +188,61 @@
     transition: transform .15s, background .2s;
   }
   .cta-btn:hover { background: #b48a2f; transform: translateY(-2px); }
+
+  /* Trenner + Formular */
+  .kontakt .divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 50px 0 30px; color: rgba(255,255,255,.7); font-size: .9rem;
+    text-transform: uppercase; letter-spacing: 2px;
+  }
+  .kontakt .divider::before, .kontakt .divider::after {
+    content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.2);
+  }
+  .kontakt form {
+    background: #fff; color: var(--text); padding: 32px 28px;
+    border-radius: 12px; text-align: left; box-shadow: 0 12px 36px rgba(0,0,0,.18);
+  }
+  .kontakt form h3 {
+    color: var(--primary); margin-bottom: 6px; font-size: 1.3rem;
+  }
+  .kontakt form .form-sub {
+    color: var(--muted); font-size: .92rem; margin-bottom: 22px;
+  }
+  .kontakt .form-row { display: grid; gap: 18px; }
+  .kontakt .form-row.two { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 600px) { .kontakt .form-row.two { grid-template-columns: 1fr; } }
+  .kontakt label {
+    display: block; font-size: .85rem; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .kontakt label .req { color: #c0392b; }
+  .kontakt input, .kontakt textarea {
+    width: 100%; padding: 11px 14px; border: 1px solid var(--border);
+    border-radius: 6px; font-size: 1rem; font-family: inherit;
+    background: var(--bg); color: var(--text);
+    transition: border-color .2s, background .2s;
+  }
+  .kontakt input:focus, .kontakt textarea:focus {
+    outline: 0; border-color: var(--accent); background: #fff;
+  }
+  .kontakt textarea { resize: vertical; min-height: 100px; }
+  .kontakt .hp { position: absolute; left: -9999px; opacity: 0; }
+  .kontakt button[type=submit] {
+    width: 100%; padding: 14px; background: var(--accent); color: #fff;
+    border: 0; border-radius: 6px; font-size: 1.05rem; font-weight: 600;
+    cursor: pointer; margin-top: 22px; transition: background .2s, transform .15s;
+  }
+  .kontakt button[type=submit]:hover { background: #b48a2f; transform: translateY(-1px); }
+  .kontakt button[type=submit]:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+  .kontakt .privacy-hint {
+    font-size: .78rem; color: var(--muted); margin-top: 16px; text-align: center;
+  }
+  .form-result {
+    margin-top: 18px; padding: 14px 18px; border-radius: 6px;
+    font-weight: 500; display: none;
+  }
+  .form-result.success { display: block; background: #e8f5e9; color: #1b5e20; border-left: 4px solid #2e7d32; }
+  .form-result.error   { display: block; background: #fdecea; color: #7f1d1d; border-left: 4px solid #c0392b; }
 
   footer { text-align: center; padding: 28px 24px; background: #1a1a1a; color: #aaa; font-size: .85rem; }
   footer a { color: var(--accent); text-decoration: none; }
@@ -279,6 +334,52 @@
       </div>
     </div>
     <a id="kontaktCta" href="tel:+4997224548" class="cta-btn">Jetzt anrufen</a>
+
+    <div class="divider">Oder Nachricht senden</div>
+
+    <form id="kontaktForm" novalidate>
+      <h3>Anfrage als Mieter</h3>
+      <p class="form-sub">Ich melde mich zeitnah bei Ihnen zurück.</p>
+
+      <input type="hidden" name="access_key" id="ak_field">
+      <input type="hidden" name="subject" value="Neue Anfrage über die Wohnungs-Webseite">
+      <input type="hidden" name="from_name" value="Wohnungen Sennfeld – Webseite">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+      <div class="form-row two">
+        <div>
+          <label for="f-name">Name <span class="req">*</span></label>
+          <input type="text" id="f-name" name="name" required autocomplete="name">
+        </div>
+        <div>
+          <label for="f-phone">Telefon <span class="req">*</span></label>
+          <input type="tel" id="f-phone" name="phone" required autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:18px;">
+        <div>
+          <label for="f-email">E-Mail <span class="req">*</span></label>
+          <input type="email" id="f-email" name="email" required autocomplete="email">
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:18px;">
+        <div>
+          <label for="f-msg">Nachricht</label>
+          <textarea id="f-msg" name="message" rows="4" placeholder="Was möchten Sie wissen? Wunsch-Besichtigungstermin?"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" id="f-submit">Anfrage senden</button>
+
+      <div id="formResult" class="form-result" role="status" aria-live="polite"></div>
+
+      <p class="privacy-hint">
+        Ihre Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet
+        und nicht an Dritte weitergegeben.
+      </p>
+    </form>
   </div>
 </section>
 
@@ -412,6 +513,55 @@
       document.head.appendChild(f);
     }
   } catch (e) { /* ignore */ }
+
+  // Kontaktformular → Web3Forms
+  (function setupForm() {
+    const form = document.getElementById('kontaktForm');
+    if (!form) return;
+    const akField = document.getElementById('ak_field');
+    const result = document.getElementById('formResult');
+    const btn = document.getElementById('f-submit');
+    if (typeof KONTAKT !== 'undefined' && KONTAKT.web3formsKey) {
+      akField.value = KONTAKT.web3formsKey;
+    }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      result.className = 'form-result';
+      result.textContent = '';
+      if (!akField.value) {
+        result.className = 'form-result error';
+        result.textContent = 'Konfigurationsfehler: kein Access Key hinterlegt.';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet…';
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const r = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const j = await r.json();
+        if (j.success) {
+          form.reset();
+          result.className = 'form-result success';
+          result.innerHTML = '✓ Vielen Dank! Ihre Anfrage ist eingegangen. Ich melde mich zeitnah bei Ihnen.';
+          btn.textContent = 'Anfrage gesendet ✓';
+        } else {
+          result.className = 'form-result error';
+          result.textContent = 'Leider ist ein Fehler aufgetreten: ' + (j.message || 'Unbekannter Fehler') + '. Bitte rufen Sie direkt an.';
+          btn.disabled = false;
+          btn.textContent = 'Erneut versuchen';
+        }
+      } catch (err) {
+        result.className = 'form-result error';
+        result.textContent = 'Verbindungsfehler. Bitte rufen Sie direkt unter ' + (KONTAKT && KONTAKT.telefon || '') + ' an.';
+        btn.disabled = false;
+        btn.textContent = 'Erneut versuchen';
+      }
+    });
+  })();
 
   // Häuser
   const housesEl = document.getElementById('houses');

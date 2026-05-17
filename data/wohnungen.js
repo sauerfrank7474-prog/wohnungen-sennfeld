@@ -185,8 +185,12 @@ const WOHNUNGEN = [
 ];
 
 // Zentraler Kontakt — wird auf allen Seiten verwendet
+// Hinweis: email wird NICHT auf der Webseite angezeigt — sie dient nur
+// als Empfänger für Anfragen aus dem Kontaktformular via Web3Forms.
 const KONTAKT = {
   name: "Frank Sauer",
   telefon: "09722 4548",
-  telefonE164: "+4997224548"
+  telefonE164: "+4997224548",
+  // Web3Forms — Anfragen aus dem Formular landen in dieser Mailbox:
+  web3formsKey: "102c248e-1d52-44e1-9793-3dc3e5ac1f2c"
 };
